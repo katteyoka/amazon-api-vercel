@@ -1,5 +1,5 @@
-const https = require('https');
-const crypto = require('crypto');
+import https from 'https';
+import crypto from 'crypto';
 
 export default async function handler(req, res) {
   // CORS対応
