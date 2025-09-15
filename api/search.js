@@ -87,14 +87,14 @@ async function searchAmazonProducts(keyword, searchIndex, itemCount) {
     crypto.createHash('sha256').update(canonicalRequest).digest('hex')
   ].join('\n');
   
-  // 署名計算
-  const kDate = crypto.createHmac('sha256', `AWS4${process.env.AWS_SECRET_KEY}`).update(dateStamp).digest();
+  // 署名計算 - 環境変数名を修正
+  const kDate = crypto.createHmac('sha256', `AWS4${process.env.AMAZON_SECRET_KEY}`).update(dateStamp).digest();
   const kRegion = crypto.createHmac('sha256', kDate).update(region).digest();
   const kService = crypto.createHmac('sha256', kRegion).update(service).digest();
   const kSigning = crypto.createHmac('sha256', kService).update('aws4_request').digest();
   const signature = crypto.createHmac('sha256', kSigning).update(stringToSign).digest('hex');
   
-  const authorization = `${algorithm} Credential=${process.env.AWS_ACCESS_KEY}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
+  const authorization = `${algorithm} Credential=${process.env.AMAZON_ACCESS_KEY}/${credentialScope}, SignedHeaders=${signedHeaders}, Signature=${signature}`;
   
   // Amazon API呼び出し
   return new Promise((resolve, reject) => {
