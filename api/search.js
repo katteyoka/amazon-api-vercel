@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 }
 
 async function searchAmazonProducts(keyword, searchIndex, itemCount) {
-  const region = 'us-east-1';
+  const region = 'us-west-2';
   const host = 'webservices.amazon.co.jp';
   const uri = '/paapi5/searchitems';
   const service = 'ProductAdvertisingAPI';
